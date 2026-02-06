@@ -1,15 +1,27 @@
 :root{
-  --bg:#0b0c10;
-  --panel:#11131a;
-  --text:#e9ecf1;
-  --muted:#aab1bd;
-  --accent:#6aa6ff;
-  --line:#23273a;
-  --today:#2a344f;
-  --hover:#1a1f30;
-  --radius:14px;
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
-  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+  /* ===== Theme: glossy black + ivory (Notion-friendly) ===== */
+
+  /* base */
+  --bg:#f7f5f2;            /* warm ivory background */
+  --panel:#ffffff;         /* card surface */
+
+  /* text */
+  --text:#151515;          /* near-black text */
+  --muted:#7f7f7f;         /* soft gray */
+
+  /* lines + accents */
+  --accent:#1f1f1f;        /* glossy-black accent */
+  --line:#e7e2db;          /* warm light line */
+
+  /* states */
+  --today:#f1ede7;         /* milky highlight for today */
+  --hover:#f5f2ee;         /* gentle hover */
+
+  /* shape + shadow */
+  --radius:18px;
+  --shadow: 0 10px 28px rgba(0,0,0,.14);
+
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", Arial, sans-serif;
 }
 
 html, body {
@@ -54,7 +66,7 @@ html, body {
   border: 1px solid var(--line);
   background: transparent;
   color: var(--text);
-  border-radius: 10px;
+  border-radius: 12px;
   height: 28px;
   width: 32px;
   cursor:pointer;
@@ -83,7 +95,7 @@ html, body {
 
 .cell{
   height: 30px;
-  border-radius: 10px;
+  border-radius: 12px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -107,12 +119,12 @@ html, body {
 
 .cell.today{
   background: var(--today);
-  border-color: rgba(106,166,255,.35);
+  border-color: rgba(31,31,31,.18);
 }
 
 .cell.selected{
-  background: rgba(106,166,255,.16);
-  border-color: rgba(106,166,255,.55);
+  background: rgba(31,31,31,.08);
+  border-color: rgba(31,31,31,.45);
 }
 
 .footer{
@@ -129,7 +141,7 @@ html, body {
 .pill{
   color: var(--text);
   border: 1px solid var(--line);
-  background: rgba(255,255,255,.03);
+  background: rgba(0,0,0,.02);
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 11px;
