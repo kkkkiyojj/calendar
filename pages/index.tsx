@@ -19,24 +19,31 @@ function sameDay(a: Date, b: Date) {
   );
 }
 
-function clampWeekStart(v: string | string[] | undefined): WeekStart {
-  const s = Array.isArray(v) ? v[0] : v;
-  return s === "mon" ? 1 : 0;
+function getParam(params: URLSearchParams | null, key: string) {
+  if (!params) return null;
+  const v = params.get(key);
+  return v && v.trim().length ? v.trim() : null;
+}
+
+function clampWeekStart(v: string | null): WeekStart {
+  return v?.toLowerCase() === "mon" ? 1 : 0;
 }
 
 export default function Home() {
-  // URL 파라미터로 옵션 조절 가능:
-  // ?week=mon  (월요일 시작)
-  // ?locale=ko-KR
-  // ?w=280 (가로폭)
+  // URL options:
+  // ?week=mon        -> week starts on Monday
+  // ?locale=en-US    -> month label locale
+  // ?w=280           -> widget width
+  // ?dow=short       -> day-of-week: short | narrow (Mon..Sun vs M..S)
   const params =
     typeof window !== "undefined"
       ? new URLSearchParams(window.location.search)
       : null;
 
-  const weekStart: WeekStart = clampWeekStart(params?.get("week") ?? undefined);
-  const locale = (params?.get("locale") || "ko-KR").trim();
-  const width = Math.max(220, Math.min(420, Number(params?.get("w") || 280)));
+  const weekStart: WeekStart = clampWeekStart(getParam(params, "week"));
+  const locale = (getParam(params, "locale") || "en-US").trim();
+  const width = Math.max(220, Math.min(420, Number(getParam(params, "w") || 280)));
+  const dowStyle = (getParam(params, "dow") || "short").toLowerCase(); // short | narrow
 
   const today = useMemo(() => new Date(), []);
   const [view, setView] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
@@ -51,11 +58,13 @@ export default function Home() {
   }, [view, locale]);
 
   const dowLabels = useMemo(() => {
-    // Intl의 weekday short는 로케일마다 길이가 제각각이라,
-    // ko-KR 기준으로는 고정값이 가장 깔끔함.
-    const sunFirst = ["일", "월", "화", "수", "목", "금", "토"];
-    return weekStart === 1 ? [...sunFirst.slice(1), sunFirst[0]] : sunFirst;
-  }, [weekStart]);
+    const baseShortSunFirst = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const baseNarrowSunFirst = ["S", "M", "T", "W", "T", "F", "S"];
+
+    const base = dowStyle === "narrow" ? baseNarrowSunFirst : baseShortSunFirst;
+
+    return weekStart === 1 ? [...base.slice(1), base[0]] : base;
+  }, [weekStart, dowStyle]);
 
   const cells = useMemo(() => {
     const y = view.getFullYear();
@@ -66,25 +75,23 @@ export default function Home() {
     const daysInMonth = last.getDate();
 
     // JS getDay(): 0=Sun..6=Sat
-    let leading = first.getDay(); // 0..6
+    let leading = first.getDay();
     if (weekStart === 1) {
-      leading = (leading + 6) % 7; // 월요일 시작으로 보정
+      leading = (leading + 6) % 7; // shift for Monday-start calendars
     }
 
     const result: Array<{ date: Date | null; label: string; inMonth: boolean }> = [];
 
-    // leading blanks
     for (let i = 0; i < leading; i++) {
       result.push({ date: null, label: "", inMonth: false });
     }
 
-    // month days
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(y, m, d);
       result.push({ date, label: String(d), inMonth: true });
     }
 
-    // trailing blanks to complete 6 rows (42 cells) - 노션에서 항상 높이 일정하게
+    // Always 6 rows (42 cells) so Notion height stays stable
     while (result.length < 42) {
       result.push({ date: null, label: "", inMonth: false });
     }
@@ -109,7 +116,6 @@ export default function Home() {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      // clipboard 막혔을 때 fallback
       const ta = document.createElement("textarea");
       ta.value = text;
       document.body.appendChild(ta);
@@ -130,16 +136,22 @@ export default function Home() {
         <div className="header">
           <div className="title">{monthLabel}</div>
           <div className="controls">
-            <button className="btn" onClick={prevMonth} aria-label="Previous month">‹</button>
-            <button className="btn" onClick={goToday} aria-label="Today">•</button>
-            <button className="btn" onClick={nextMonth} aria-label="Next month">›</button>
+            <button className="btn" onClick={prevMonth} aria-label="Previous month">
+              ‹
+            </button>
+            <button className="btn" onClick={goToday} aria-label="Today">
+              •
+            </button>
+            <button className="btn" onClick={nextMonth} aria-label="Next month">
+              ›
+            </button>
           </div>
         </div>
 
         <div className="grid">
           <div className="dow">
-            {dowLabels.map((d) => (
-              <div key={d}>{d}</div>
+            {dowLabels.map((d, i) => (
+              <div key={`${d}-${i}`}>{d}</div>
             ))}
           </div>
 
@@ -172,7 +184,9 @@ export default function Home() {
 
         <div className="footer">
           <div className="pill">{formatYMD(selected)}</div>
-          <button className="copy" onClick={copySelected}>Copy</button>
+          <button className="copy" onClick={copySelected}>
+            Copy
+          </button>
         </div>
       </div>
     </>
