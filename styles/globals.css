@@ -1,0 +1,151 @@
+:root{
+  --bg:#0b0c10;
+  --panel:#11131a;
+  --text:#e9ecf1;
+  --muted:#aab1bd;
+  --accent:#6aa6ff;
+  --line:#23273a;
+  --today:#2a344f;
+  --hover:#1a1f30;
+  --radius:14px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  font-family: var(--font);
+  color: var(--text);
+}
+
+* { box-sizing: border-box; }
+
+.widget {
+  width: 280px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.title{
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.controls{
+  display:flex;
+  gap:6px;
+}
+
+.btn{
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  border-radius: 10px;
+  height: 28px;
+  width: 32px;
+  cursor:pointer;
+}
+.btn:hover{ background: var(--hover); }
+
+.grid{
+  padding: 10px 10px 12px;
+}
+
+.dow{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 0 2px 8px;
+  color: var(--muted);
+  font-size: 11px;
+  text-align:center;
+}
+
+.days{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.cell{
+  height: 30px;
+  border-radius: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 12px;
+  border: 1px solid transparent;
+  user-select:none;
+}
+
+.cell.blank{
+  opacity:.35;
+  color: var(--muted);
+}
+
+.cell.day{
+  cursor:pointer;
+}
+.cell.day:hover{
+  background: var(--hover);
+  border-color: var(--line);
+}
+
+.cell.today{
+  background: var(--today);
+  border-color: rgba(106,166,255,.35);
+}
+
+.cell.selected{
+  background: rgba(106,166,255,.16);
+  border-color: rgba(106,166,255,.55);
+}
+
+.footer{
+  padding: 8px 12px 12px;
+  border-top: 1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.pill{
+  color: var(--text);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.copy{
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 10px;
+  cursor:pointer;
+  font-size: 11px;
+}
+.copy:hover{ background: var(--hover); }
