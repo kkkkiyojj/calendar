@@ -161,3 +161,7 @@ html, body {
   font-size: 11px;
 }
 .copy:hover{ background: var(--hover); }
+.cell.selected{
+  background: hotpink !important;
+  border-color: hotpink !important;
+}
