@@ -123,8 +123,8 @@ html, body {
 }
 
 .cell.selected{
-  background: rgba(31,31,31,.08);
-  border-color: rgba(31,31,31,.45);
+  background: rgba(190, 220, 245, .35);
+  border-color: rgba(120, 160, 200, .55);
 }
 
 .footer{
@@ -161,7 +161,3 @@ html, body {
   font-size: 11px;
 }
 .copy:hover{ background: var(--hover); }
-.cell.today{
-  background: #eaf5ff !important;
-  border-color: #cfe3f6 !important;
-}
