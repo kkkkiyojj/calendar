@@ -161,3 +161,9 @@ html, body {
   font-size: 11px;
 }
 .copy:hover{ background: var(--hover); }
+
+/* 오늘 날짜를 클릭했을 때도 하늘톤 유지 */
+.cell.today.selected{
+  background: var(--today);
+  border-color: var(--line);
+}
