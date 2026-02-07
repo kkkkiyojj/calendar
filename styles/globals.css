@@ -7,14 +7,14 @@
 
   /* text */
   --text:#151515;          /* near-black text */
-  --muted:#7f7f7f;         /* soft gray */
+  --muted:#7a8fa5;         /* soft gray */
 
   /* lines + accents */
-  --accent:#1f1f1f;        /* glossy-black accent */
-  --line:#e7e2db;          /* warm light line */
+  --accent:#6f859a;        /* glossy-black accent */
+  --line:#d6e1ec;          /* warm light line */
 
   /* states */
-  --today:#f1ede7;         /* milky highlight for today */
+  --today:#e6eef6;         /* milky highlight for today */
   --hover:#f5f2ee;         /* gentle hover */
 
   /* shape + shadow */
