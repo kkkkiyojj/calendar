@@ -161,3 +161,7 @@ html, body {
   font-size: 11px;
 }
 .copy:hover{ background: var(--hover); }
+.cell.today{
+  background: #eaf5ff !important;
+  border-color: #cfe3f6 !important;
+}
