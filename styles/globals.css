@@ -119,7 +119,7 @@ html, body {
 
 .cell.today{
   background: var(--today);
-  border-color: rgba(31,31,31,.18);
+  border-color: var(--line); /* ← hover랑 같은 계열로 */
 }
 
 .cell.selected{
